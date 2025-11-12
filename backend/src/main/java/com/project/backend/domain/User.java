@@ -17,7 +17,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class User {
 
     @Id
@@ -68,7 +67,5 @@ public class User {
     public int hashCode() {
         return Objects.hash( id, name, email, createdAt, updatedAt );
     }
-
-
 
 }
