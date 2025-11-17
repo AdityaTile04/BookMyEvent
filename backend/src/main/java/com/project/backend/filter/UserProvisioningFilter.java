@@ -1,6 +1,6 @@
 package com.project.backend.filter;
 
-import com.project.backend.domain.User;
+import com.project.backend.domain.entities.User;
 import com.project.backend.repository.UserRepo;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
