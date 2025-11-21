@@ -13,16 +13,12 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetEventDetailsResponseDto {
+public class GetPublishedEventDetailsResponseDto {
     private UUID id;
     private String name;
     private LocalDateTime start;
     private LocalDateTime end;
     private String venue;
-    private LocalDateTime salesStart;
-    private LocalDateTime salesEnd;
     private EventStatusEnum status;
-    private List<GetEventDetailsTicketTypesResponseDto> ticketTypes = new ArrayList<>();
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private List<GetPublishedEventDetailsTicketTypesResponseDto> ticketTypes = new ArrayList<>();
 }

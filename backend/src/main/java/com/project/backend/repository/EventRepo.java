@@ -29,4 +29,6 @@ public interface EventRepo extends JpaRepository<Event, UUID> {
                     "@@ plainto_tsquery('english', :searchTerm)",
             nativeQuery = true)
     Page<Event> searchEvents(@Param( "searchTerm" ) String searchTerm, Pageable pageable);
+
+    Optional<Event> findByIdAndStatus(UUID id, EventStatusEnum status);
 }
