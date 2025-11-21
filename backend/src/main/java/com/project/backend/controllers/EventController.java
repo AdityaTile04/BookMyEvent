@@ -1,10 +1,8 @@
 package com.project.backend.controllers;
 
 import com.project.backend.domain.CreateEventRequest;
-import com.project.backend.domain.dtos.CreateEventRequestDto;
-import com.project.backend.domain.dtos.CreateEventResponseDto;
-import com.project.backend.domain.dtos.GetEventDetailsResponseDto;
-import com.project.backend.domain.dtos.ListEventResponseDto;
+import com.project.backend.domain.UpdateEventRequest;
+import com.project.backend.domain.dtos.*;
 import com.project.backend.domain.entities.Event;
 import com.project.backend.mappers.EventMapper;
 import com.project.backend.services.EventService;
@@ -40,6 +38,21 @@ public class EventController {
         return new ResponseEntity<>( createEventResponseDto, HttpStatus.CREATED );
     }
 
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto) {
+        UpdateEventRequest updateEventRequest = eventMapper.fromDto( updateEventRequestDto);
+        UUID userId = parseUserId( jwt );
+        Event updatedEvent = eventService.updateEventForOrganizer( userId, eventId, updateEventRequest);
+
+       UpdateEventResponseDto updateEventResponseDto = eventMapper.toDtoUpdateEventResponseDto( updatedEvent );
+
+      return ResponseEntity.ok(updateEventResponseDto);
+    }
+
+
     @GetMapping
     public ResponseEntity<Page<ListEventResponseDto>> listEvents(
             @AuthenticationPrincipal Jwt jwt,
@@ -60,6 +73,17 @@ public class EventController {
                 .map( eventMapper::toGetEventDetailsResponseDto )
                 .map( ResponseEntity::ok )
                 .orElse( ResponseEntity.notFound().build());
+    }
+
+
+    @DeleteMapping(path = "/{eventId}")
+    public ResponseEntity<Void> deleteEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId
+    ) {
+        UUID userId = parseUserId( jwt );
+        eventService.deleteEventForOrganizer( userId, eventId );
+        return ResponseEntity.noContent().build();
     }
 
     private UUID parseUserId(Jwt jwt) {

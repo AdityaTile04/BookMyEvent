@@ -2,6 +2,8 @@ package com.project.backend.mappers;
 
 import com.project.backend.domain.CreateEventRequest;
 import com.project.backend.domain.CreateTicketTypeRequest;
+import com.project.backend.domain.UpdateEventRequest;
+import com.project.backend.domain.UpdateTicketTypeRequest;
 import com.project.backend.domain.dtos.*;
 import com.project.backend.domain.entities.Event;
 import com.project.backend.domain.entities.TicketType;
@@ -24,5 +26,15 @@ public interface EventMapper {
     GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
 
     GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
+
+    UpdateTicketTypeRequest fromDto(UpdateTicketTypeRequestDto dto);
+
+    UpdateEventRequest fromDto(UpdateEventRequestDto dto);
+
+    UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto(TicketType ticketType);
+
+    UpdateEventResponseDto toDtoUpdateEventResponseDto(Event event);
+
+    ListPublishedEventResponseDto toListPublishedEventResponseDto(Event event);
 
 }
