@@ -33,14 +33,14 @@ public class TicketValidationServiceImpl implements TicketValidationService {
 
         Ticket ticket = qrCode.getTicket();
 
-        return validateTicket( ticket );
+        return validateTicket( ticket, TicketValidationMethod.QR_SCAN );
 
     }
 
-    private TicketValidation validateTicket(Ticket ticket) {
+    private TicketValidation validateTicket(Ticket ticket, TicketValidationMethod ticketValidationMethod) {
         TicketValidation ticketValidation = new TicketValidation();
         ticketValidation.setTicket( ticket );
-        ticketValidation.setValidationMethod( TicketValidationMethod.QR_SCAN );
+        ticketValidation.setValidationMethod( ticketValidationMethod );
 
         TicketValidationStatusEnum ticketValidationStatus = ticket.getValidations().stream()
                 .filter( v -> TicketValidationStatusEnum.VALID.equals( v.getStatus() ) )
@@ -57,6 +57,6 @@ public class TicketValidationServiceImpl implements TicketValidationService {
     @Override
     public TicketValidation validateTicketManually(UUID ticketId) {
         Ticket ticket = ticketRepo.findById( ticketId ).orElseThrow(TicketNotFoundException::new );
-        return validateTicket( ticket );
+        return validateTicket( ticket, TicketValidationMethod.MANUAL );
     }
 }
