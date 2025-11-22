@@ -20,7 +20,7 @@ public class TicketValidationServiceImpl implements TicketValidationService {
 
     private final QrCodeRepo qrCodeRepo;
     private final TicketValidationRepo ticketValidationRepo;
-    private TicketRepo ticketRepo;
+    private final TicketRepo ticketRepo;
 
     @Override
     public TicketValidation validationTicketByQrCode(UUID qrCodeId) {
