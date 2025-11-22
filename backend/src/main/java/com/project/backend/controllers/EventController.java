@@ -6,6 +6,7 @@ import com.project.backend.domain.dtos.*;
 import com.project.backend.domain.entities.Event;
 import com.project.backend.mappers.EventMapper;
 import com.project.backend.services.EventService;
+import com.project.backend.util.JwtUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+
+import static com.project.backend.util.JwtUtil.parseUserId;
 
 @RestController
 @RequestMapping(path = "/api/v1/events")
@@ -84,10 +87,6 @@ public class EventController {
         UUID userId = parseUserId( jwt );
         eventService.deleteEventForOrganizer( userId, eventId );
         return ResponseEntity.noContent().build();
-    }
-
-    private UUID parseUserId(Jwt jwt) {
-        return UUID.fromString( jwt.getSubject() );
     }
 
 }
