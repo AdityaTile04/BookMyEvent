@@ -18,6 +18,7 @@ public class SecurityConfig {
         http.
                 authorizeHttpRequests(authorize -> authorize.
                         requestMatchers( HttpMethod.GET, "/api/v1/published-events/**" ).permitAll()
+                        .requestMatchers( "/api/v1/events" ).hasRole( "ORGANIZER" )
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ))
